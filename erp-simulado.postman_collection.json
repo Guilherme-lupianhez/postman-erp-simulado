@@ -1,0 +1,204 @@
+{
+  "info": {
+    "_postman_id": "a312a30b-8f67-4948-a138-67037ed1f247",
+    "name": "My Collection Copy",
+    "description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "52835955",
+    "_collection_link": "https://go.postman.co/collection/52835955-a312a30b-8f67-4948-a138-67037ed1f247?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Cadastro cliente",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const json = pm.response.json();\r",
+              "pm.environment.set(\"cliente_id\", json.id);\r",
+              "\r",
+              "pm.test(\"Cliente cadastrado\", () => {\r",
+              "  pm.response.to.have.status(201);\r",
+              "});\r",
+              "pm.test(\"Cliente tem id\", () => {\r",
+              "  pm.expect(json.id).to.be.a(\"number\");\r",
+              "});\r",
+              "pm.test(\"Nome do cliente correto\", () => {\r",
+              "  pm.expect(json.name).to.include(\"ABC\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Empresa ABC Ltda\",\r\n  \"email\": \"financeiro@empresaabc.com.br\",\r\n  \"phone\": \"11999990001\",\r\n  \"username\": \"empresa_abc\",\r\n  \"address\": {\r\n    \"city\": \"São Paulo\",\r\n    \"zipcode\": \"01310-100\"\r\n  }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/users",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST Cadastrar produto",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const json = pm.response.json();\r",
+              "pm.environment.set(\"produto_id\", json.id);\r",
+              "\r",
+              "pm.test(\"Produto cadastrado\", () => {\r",
+              "  pm.response.to.have.status(201);\r",
+              "});\r",
+              "pm.test(\"Produto tem título\", () => {\r",
+              "  pm.expect(json.title).to.not.be.empty;\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"title\": \"Notebook Dell Inspiron 15\",\r\n  \"body\": \"Estoque: 42 unidades | Preço: R$ 3.499,00\",\r\n  \"userId\": 1\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/posts",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "posts"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Criar pedido",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const json = pm.response.json();\r",
+              "pm.environment.set(\"pedido_id\", json.id);\r",
+              "\r",
+              "pm.test(\"Pedido criado\", () => {\r",
+              "  pm.response.to.have.status(201);\r",
+              "});\r",
+              "pm.test(\"Pedido vinculado ao cliente\", () => {\r",
+              "  pm.expect(json.userId).to.eql(11);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"title\": \"Pedido #001 — Empresa ABC Ltda\",\r\n  \"body\": \"Produto: Notebook Dell | Qtd: 2 | Total: R$ 6.998,00 | Status: AGUARDANDO\",\r\n  \"userId\": 11\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/posts",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "posts"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Gerar cobrança",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const json = pm.response.json();\r",
+              "pm.environment.set(\"cobranca_id\", json.id);\r",
+              "\r",
+              "pm.test(\"Cobrança gerada\", () => {\r",
+              "  pm.response.to.have.status(201);\r",
+              "});\r",
+              "pm.test(\"Cobrança tem id\", () => {\r",
+              "  pm.expect(json.id).to.be.a(\"number\");\r",
+              "});\r",
+              "pm.test(\"Cobrança tem id válido\", () => {\r",
+              "  pm.expect(json).to.have.property(\"id\");\r",
+              "});\r",
+              "pm.test(\"Tempo de resposta aceitável\", () => {\r",
+              "  pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"title\": \"Cobrança — Pedido #101\",\r\n  \"body\": \"Valor: R$ 6.998,00 | Vencimento: 2026-04-30 | Status: PENDENTE\",\r\n  \"userId\": 11\r\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/posts",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "posts"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
